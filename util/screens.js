@@ -47,8 +47,15 @@ async function login() {
 
 	switch (role) {
 		case "1":
-			say("You have chosen the Elven Wizard");
-			await alert("You have chosen the Elven Wizard");
+			await sayAndAlert("You have chosen the Leandra the Wizard");
+			await pause(3);
+			return wizard();
+		case "2":
+			await sayAndAlert("You have chosen Merisiel the Figher");
+			await pause(3);
+			return wizard();
+		case "3":
+			await sayAndAlert("You have chosen Kurt the Knivethrower");
 			await pause(3);
 			return wizard();
 		case "4":
