@@ -4,22 +4,27 @@ import pause from "./pause.js";
 import alert from "./alert.js";
 import say from "./speak.js";
 
+let role;
+
+const roles = {
+	1: "Leandra",
+	2: "Merisiel",
+	3: "Kurt"
+};
+
+const weapon = {
+	1: "staff",
+	2: "sword",
+	3: "knives"
+};
+
 /** Boot screen */
 async function boot() {
 	clear();
 	await type([
-		"Welcome to ECMA industries(TM) terminal",
-		" ",
-		"> SET TERMINAL/BOOT",
-		"Loading........................",
-		"Please wait........",
-		"..........",
-		"...",
-		".",
-		"OK.",
-		" ",
-		"> SET TERMINAL/LOGON",
-		"USER AUTHENTICATION CHECK"
+		"Welcome to Fritz' 33rd birthday",
+		"You are very welcome to ENTER",
+		"(Press ENTER to continue)"
 	]);
 
 	await pause();
@@ -28,9 +33,33 @@ async function boot() {
 
 /** Login screen */
 async function login() {
-	clear();
-	let user = await prompt("Username:");
-	let password = await prompt("Password:", true);
+	// clear();
+	await type([
+		"You have been chosen to come to the party",
+		"But first you have to play a game.",
+		"Choose any of the following:",
+		"1) Wizard - Leandra",
+		"2) Fighter - Merisiel",
+		"3) Knivethrower - Kurt",
+		"4) I choose not to play, skip to the end"
+	]);
+	role = await prompt("Enter a number between 1-3 (or 4):");
+
+	switch (role) {
+		case "1":
+			say("You have chosen the Elven Wizard");
+			await alert("You have chosen the Elven Wizard");
+			await pause(3);
+			return wizard();
+		case "4":
+			await alert("You have chosen not to play");
+			return outro();
+		default:
+			await type(["Incorrect choice, try again"]);
+			await pause(3);
+			clear();
+			return login();
+	}
 
 	if (user === "admin" && password === "admin") {
 		await pause();
@@ -44,6 +73,142 @@ async function login() {
 		clear();
 		return login();
 	}
+}
+
+async function sayAndAlert(text) {
+	say(text);
+	await alert(text);
+	await pause(3);
+}
+
+async function intro() {
+	await type([
+		"A plague has come upon the land.",
+		"Everyone is seized with an immense terror.",
+		'Everything is "afgelast".',
+		`As a well known ${roles[role]}`,
+		"You've been asked to find the 'Goblet of Immunity'.",
+		"Searching far and wide you've followed a number of clues.",
+		"Leading you into dark caverns underneath an enchanted forest.",
+		"After roaming around and fighting off crittens",
+		"You reach the end of a tunnel",
+		"The tunnel seems to be going up and leading you out of the caverns"
+	]);
+	clear();
+	await type([
+		"At the exit there are 2 doors. ",
+		"The left door has a symbol of a goblet and you hear the trickle of water behind it",
+		"The right door is scratched and has a symbol of a dragon holding a goblet on it"
+	]);
+	async function chooseDoor() {
+		let choice = await prompt("1 to go the left, 2 to go the right");
+
+		if (choice == "1") {
+			await sayAndAlert("You have chosen the door with the fountain");
+			clear();
+			return fountain();
+		} else if (choice == "2") {
+			await sayAndAlert("You have chosen the door with the dragon");
+			clear();
+			return dragon();
+		} else {
+			chooseDoor();
+		}
+	}
+	await chooseDoor();
+}
+
+async function fountain() {
+	await type([
+		"You exit the tunnel and you find yourself in front of a fountain",
+		"A large fountain, that shimmers and shines",
+		"and shoots water high up in the air",
+		"A little bit of the spray comes upon your chin.",
+		"You immediately feel lighter and envigorated.",
+		"No longer tired, nor coughing",
+		"Is this the cure the town has been looking for?",
+		"If only you could transport this"
+	]);
+	await type([
+		"The goblet does not seem to be in sight, what do you do?",
+		"1) Go back through the door and search the other room.",
+		"2) Sit here and eternally stay 33."
+	]);
+	let choice = await prompt("Choose 1 or 2");
+
+	if (choice == "1") {
+		await sayAndAlert(
+			"You have chosen to go through the door with the dragon"
+		);
+		await pause(3);
+		dragon();
+	} else {
+		await type([
+			"You will eternally stay 33.",
+			"You will miss Fritz' party",
+			"He will miss you.",
+			"❤️ stay safe."
+		]);
+	}
+}
+
+async function dragon() {
+	clear();
+	await type([
+		"You enter a large cavern with slime dripping from the walls",
+		"A musty smell overwhelms you. You slowly proceed.",
+		"Stalactites obscure the view right in front of you,",
+		"but just behind the first column you see a thick large",
+		"long beam of some sort with scales.",
+		"As you look closer you see it going up and down,",
+		"just like you would imagine a tail of a reclining dragon would do.",
+		`A growling voice snarls: 'What brings you here ${roles[role]}`,
+		`1) Without answering you immediately grab your ${weapon[role]} and attack`,
+		"2) You tell the dragon about the goblet"
+	]);
+	let answer = await prompt("What do you answer?");
+
+	if (answer == "1") {
+		await type([
+			"The dragon slowly rises and braces himself for the attack",
+			"However, you miss. The dragon seizes the opportunity and sneezes.",
+			"The nastiest sneeze known to man."
+		]);
+		pause(1);
+		clear();
+		outro();
+	} else {
+		await type([
+			"Halfway during your story about the plague and the town",
+			"The dragon rises and seizes the opportunity to sneeze.",
+			"The nastiest sneeze known to man."
+		]);
+		pause(1);
+		clear();
+		outro();
+	}
+
+	// 1 aanvalluuuh! en verliezen
+	// 2 draak komt in actie en niest je onder.
+}
+
+async function outro() {
+	await type([
+		"You have failed to defeat the dragon",
+		"You have failed to find the Goblet.",
+		"You are covered in an oozy substance.",
+		"You will need to be tested.",
+		"Go to https://coronatest.nl"
+	]);
+	await type([
+		"Fritz is sad you will not be able to attend",
+		"He misses you and wishes you the best",
+		"❤️"
+	]);
+}
+
+async function wizard() {
+	await intro();
 }
 
 /** Main input terminal, recursively calls itself */
@@ -76,11 +241,11 @@ function toggleFullscreen(isFullscreen) {
 
 /** Attempts to load template HTML from the given path and includes them in the <head>. */
 async function loadTemplates(path) {
-	let txt = await fetch(path).then(res => res.text());
+	let txt = await fetch(path).then((res) => res.text());
 	let html = new DOMParser().parseFromString(txt, "text/html");
 	let templates = html.querySelectorAll("template");
 
-	templates.forEach(template => {
+	templates.forEach((template) => {
 		document.head.appendChild(template);
 	});
 }
@@ -132,6 +297,7 @@ export {
 	toggleFullscreen,
 	div,
 	el,
+	wizard,
 	loadTemplates,
 	addTemplate,
 	showTemplateScreen
