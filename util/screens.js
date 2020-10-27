@@ -29,7 +29,8 @@ async function boot() {
 	clear();
 	await type([
 		"Welcome to Fritz' 33rd birthday",
-		"You are very welcome to ENTER"
+		"You are very welcome to ENTER",
+		"If you're on mobile, rotate your device"
 	]);
 
 	await pause();
@@ -40,6 +41,7 @@ async function boot() {
 async function login() {
 	// clear();
 	await type([
+		"  ",
 		"You have been chosen to come to the party",
 		"But first you have to play a game.",
 		"Choose any of the following:",
