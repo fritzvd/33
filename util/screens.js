@@ -29,7 +29,7 @@ async function boot() {
 	clear();
 	await type([
 		"Welcome to Fritz' 33rd birthday",
-		"You are very welcome to ENTER",
+		"You are very welcome to ENTER.",
 		"If you're on mobile, rotate your device"
 	]);
 
