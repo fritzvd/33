@@ -163,7 +163,7 @@ pre {
 	width: 80ch; /* This makes 80 monospace characters fit on the screen */
 	height: calc(80ch * 0.8);
 	font-size: max(
-		1rem,
+		2rem,
 		2.2vmin
 	); /* Scale the font-size relative to the minimum screen dimension */
 	position: relative;
