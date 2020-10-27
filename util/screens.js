@@ -6,10 +6,16 @@ import say from "./speak.js";
 
 let role;
 
-const roles = {
+const names = {
 	1: "Leandra",
 	2: "Merisiel",
 	3: "Kurt"
+};
+
+const roles = {
+	1: "wizard",
+	2: "figher",
+	3: "knivethrower"
 };
 
 const weapon = {
@@ -23,8 +29,7 @@ async function boot() {
 	clear();
 	await type([
 		"Welcome to Fritz' 33rd birthday",
-		"You are very welcome to ENTER",
-		"(Press ENTER to continue)"
+		"You are very welcome to ENTER"
 	]);
 
 	await pause();
@@ -48,22 +53,22 @@ async function login() {
 	switch (role) {
 		case "1":
 			await sayAndAlert("You have chosen the Leandra the Wizard");
-			await pause(3);
+			await pause(1);
 			return wizard();
 		case "2":
 			await sayAndAlert("You have chosen Merisiel the Figher");
-			await pause(3);
+			await pause(1);
 			return wizard();
 		case "3":
 			await sayAndAlert("You have chosen Kurt the Knivethrower");
-			await pause(3);
+			await pause(1);
 			return wizard();
 		case "4":
 			await alert("You have chosen not to play");
 			return outro();
 		default:
 			await type(["Incorrect choice, try again"]);
-			await pause(3);
+			await pause(1);
 			clear();
 			return login();
 	}
@@ -85,7 +90,7 @@ async function login() {
 async function sayAndAlert(text) {
 	say(text);
 	await alert(text);
-	await pause(3);
+	await pause(1);
 }
 
 async function intro() {
@@ -147,7 +152,6 @@ async function fountain() {
 		await sayAndAlert(
 			"You have chosen to go through the door with the dragon"
 		);
-		await pause(3);
 		dragon();
 	} else {
 		await type([
@@ -169,7 +173,7 @@ async function dragon() {
 		"long beam of some sort with scales.",
 		"As you look closer you see it going up and down,",
 		"just like you would imagine a tail of a reclining dragon would do.",
-		`A growling voice snarls: 'What brings you here ${roles[role]}`,
+		`A growling voice snarls: 'What brings you here ${names[role]}`,
 		`1) Without answering you immediately grab your ${weapon[role]} and attack`,
 		"2) You tell the dragon about the goblet"
 	]);
